@@ -27,7 +27,13 @@ void PlayerCollidesWithEnemy(GameObject *pObject1, GameObject *pObject2)
 	pPlayerShip->Hit(std::numeric_limits<float>::max());
 	pEnemyShip->Hit(std::numeric_limits<float>::max());
 }
-
+void ItemCollected(GameObject* pObject1, GameObject* pObject2) {
+	bool m = pObject1->HasMask(CollisionType::Player);
+	PlayerShip* pPlayerShip = (PlayerShip*)((m) ? pObject1 : pObject2);
+	Item* pItem = (Item*)((!m) ? pObject1 : pObject2);
+	pItem->Deactivate();
+	pPlayerShip->SetSpeed(pPlayerShip->GetSpeed() + 50);
+}
 
 Level::Level()
 {
@@ -60,16 +66,26 @@ Level::Level()
 	m_pPlayerShip->Activate();
 	AddGameObject(m_pPlayerShip);
 
+	//Setup Items
+	for (int i = 0; i < 100; i++) {
+		Item* pItem = new Item();
+		m_pItems.push_back(pItem);
+		pItem->Deactivate();
+		AddGameObject(pItem);
+	}
+
 	// Setup collision types
 	CollisionManager *pC = GetCollisionManager();
 
 	CollisionType playerShip = (CollisionType::Player | CollisionType::Ship);
 	CollisionType playerProjectile = (CollisionType::Player | CollisionType::Projectile);
 	CollisionType enemyShip = (CollisionType::Enemy | CollisionType::Ship);
-
+	CollisionType droppedItem = (CollisionType::Item);
 	pC->AddNonCollisionType(playerShip, playerProjectile);
+	pC->AddNonCollisionType(playerProjectile, droppedItem);
 	pC->AddCollisionType(playerProjectile, enemyShip, PlayerShootsEnemy);
 	pC->AddCollisionType(playerShip, enemyShip, PlayerCollidesWithEnemy);
+	pC->AddCollisionType(playerShip, droppedItem, ItemCollected);
 }
 
 Level::~Level()
@@ -103,6 +119,13 @@ void Level::LoadContent(ResourceManager& resourceManager)
 			pExplosion->SetSound(pExplosionSound);
 			s_explosions.push_back(pExplosion);
 		}
+	}
+
+	//Setup Items #2 (Adding Texture) [No custom texture, so using Particle for now]
+	Texture* pTexture = resourceManager.Load<Texture>("Textures\\Particle.png");
+	for (unsigned int i = 0; i < m_pItems.size(); i++)
+	{
+		m_pItems[i]->SetTexture(pTexture);
 	}
 }
 
@@ -201,6 +224,29 @@ void Level::SpawnExplosion(GameObject *pExplodingObject)
 	pExplosion->Activate(pExplodingObject->GetPosition(), scale);
 }
 
+//Spawns an Item in the same way an explosion is spawned
+void Level::SpawnItem(GameObject* pItemSpawner)
+{
+	Item* pItem = nullptr;
+	for (unsigned int i = 0; i < m_pItems.size(); i++)
+	{
+		if (!m_pItems[i]->IsActive())
+		{
+			pItem = m_pItems[i];
+			break;
+		}
+	}
+
+	if (!pItem) return;
+
+	const float aproximateTextureRadius = 120;
+	const float objectRadius = pItemSpawner->GetCollisionRadius();
+	const float scaleToObjectSize = (1 / aproximateTextureRadius) * objectRadius * 2;
+	const float dramaticEffect = 2.2f;
+	const float scale = scaleToObjectSize * dramaticEffect;
+	pItem->Activate(pItemSpawner->GetPosition(), scale);
+	m_gameObjects.push_back(pItem);
+}
 
 float Level::GetAlpha() const
 {

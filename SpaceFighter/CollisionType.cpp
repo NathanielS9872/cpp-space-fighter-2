@@ -6,3 +6,4 @@ const CollisionType CollisionType::Player		= CollisionType(1 << 0);
 const CollisionType CollisionType::Enemy		= CollisionType(1 << 1);
 const CollisionType CollisionType::Ship			= CollisionType(1 << 2);
 const CollisionType CollisionType::Projectile	= CollisionType(1 << 3);
+const CollisionType CollisionType::Item = CollisionType(1 << 4);

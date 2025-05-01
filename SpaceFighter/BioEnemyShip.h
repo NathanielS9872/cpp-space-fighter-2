@@ -24,8 +24,7 @@ public:
 	/** @brief Draws the enemy ship.
 		@param spriteBatch A reference to the game's sprite batch, used for rendering. */
 	virtual void Draw(SpriteBatch& spriteBatch);
-
-
+	virtual Texture* GetTexture() { return m_pTexture; }//Gets the stored texture (for Item and possibly others)
 private:
 
 	Texture *m_pTexture = nullptr;

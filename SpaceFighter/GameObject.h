@@ -40,7 +40,7 @@ public:
 	/** @brief Flag to determine if the object is active.
 		@return True if the object is active. */
 	virtual bool IsActive() const { return m_isActive; }
-
+	virtual void SetActive(bool active) { m_isActive = active; }
 	/** @brief Activate the object. */
 	virtual void Activate() { m_isActive = true; }
 

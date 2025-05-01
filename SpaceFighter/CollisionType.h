@@ -19,7 +19,7 @@ public:
 
 	
 	static const CollisionType None;
-
+	static const CollisionType Item;
 	static const CollisionType Player;
 	static const CollisionType Enemy;
 

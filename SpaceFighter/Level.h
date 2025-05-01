@@ -5,9 +5,10 @@
 #include "PlayerShip.h"
 #include "CollisionManager.h"
 #include "Explosion.h"
+#include "Item.h"
 
 using namespace KatanaEngine;
-
+class Item;
 class GameplayScreen;
 
 /** @brief Represents a level in the game. */
@@ -26,7 +27,7 @@ public:
 	virtual void LoadContent(ResourceManager& resourceManager);
 
 	/** @brief Unload the content for the level. */
-	virtual void UnloadContent() { };
+	virtual void UnloadContent() {};
 
 	/** @brief Handle input for the level.
 		@param input The current state of all player input devices. */
@@ -57,7 +58,7 @@ public:
 	/** @brief Spawn an explosion at a specific position.
 		@param position The position to spawn the explosion at. */
 	virtual void SpawnExplosion(GameObject* pExplodingObject);
-
+	virtual void SpawnItem(GameObject* pItemSpawner);
 	/** @brief Set the background texture for the level.
 		@param pBackground A pointer to the texture to use as the background. */
 	virtual void SetBackground(Texture* pBackground) { m_pBackground = pBackground; }
@@ -109,7 +110,6 @@ public:
 		return pClosest;
 	}
 
-
 protected:
 
 	/** @brief Get a pointer to the collision manager.
@@ -130,7 +130,7 @@ protected:
 
 private:
 
-	static std::vector<Explosion *> s_explosions;
+	static std::vector<Explosion*> s_explosions;
 	//std::vector<Explosion *>::iterator m_explosionIt;
 
 	CollisionManager* m_pCollisionManager = nullptr;
@@ -142,6 +142,7 @@ private:
 	Texture* m_pBackground = nullptr;
 
 	std::vector<GameObject*>* m_pSectors;
+	std::vector<Item*> m_pItems;
 
 	Vector2 m_sectorCount;
 	Vector2 m_sectorSize;

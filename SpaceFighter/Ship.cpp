@@ -29,6 +29,13 @@ void Ship::Hit(const float damage)
 	if (m_hitPoints > 0) return;
 
 	GameObject::Deactivate();
+	if (this->ToString() != "Player Ship") {
+		srand(time(NULL));
+		//Randomly drops an item when a non-PlayerShip is destroyed (currently 50%)
+		if (rand() % 2 == 0) {
+			GetCurrentLevel()->SpawnItem(this);
+		}
+	}
 	GetCurrentLevel()->SpawnExplosion(this);
 }
 
