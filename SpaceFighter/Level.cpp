@@ -32,7 +32,9 @@ void ItemCollected(GameObject* pObject1, GameObject* pObject2) {
 	PlayerShip* pPlayerShip = (PlayerShip*)((m) ? pObject1 : pObject2);
 	Item* pItem = (Item*)((!m) ? pObject1 : pObject2);
 	pItem->Deactivate();
-	pPlayerShip->SetSpeed(pPlayerShip->GetSpeed() + 50);
+	pPlayerShip->SetSpeed(pPlayerShip->GetSpeed() + 10);//Optional smaller speed boost
+	Blaster* blaster = (Blaster*)pPlayerShip->GetWeapon("Main Blaster");
+	blaster->SetCooldownSeconds(blaster->GetCooldownSeconds() - (blaster->GetCooldownSeconds() / 10));
 }
 
 Level::Level()
@@ -120,9 +122,8 @@ void Level::LoadContent(ResourceManager& resourceManager)
 			s_explosions.push_back(pExplosion);
 		}
 	}
-
-	//Setup Items #2 (Adding Texture) [No custom texture, so using Particle for now]
-	Texture* pTexture = resourceManager.Load<Texture>("Textures\\Particle.png");
+	//Setup Items #2 (Adding Texture)
+	Texture* pTexture = resourceManager.Load<Texture>("Textures\\Powerup.png");
 	for (unsigned int i = 0; i < m_pItems.size(); i++)
 	{
 		m_pItems[i]->SetTexture(pTexture);
