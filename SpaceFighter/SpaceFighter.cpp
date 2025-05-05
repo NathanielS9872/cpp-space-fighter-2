@@ -21,6 +21,11 @@ SpaceFighter::SpaceFighter()
 	Font::SetLoadSize(18, true);
 	Font *pFont = GetResourceManager()->Load<Font>("Fonts\\Arialbd.ttf", false);
 	SetFrameCounterFont(pFont);
+
+	// Font for displaying the scoreboard
+	Font::SetLoadSize(36, true);
+	Font* pFont2 = GetResourceManager()->Load<Font>("Fonts\\Ethnocentric.ttf", false);
+	SetScoreboardFont(pFont2);
 }
 
 
@@ -41,4 +46,6 @@ void SpaceFighter::Draw(SpriteBatch& spriteBatch)
 	Game::Draw(spriteBatch);
 
 	DisplayFrameRate();
+
+	DisplayScore();
 }

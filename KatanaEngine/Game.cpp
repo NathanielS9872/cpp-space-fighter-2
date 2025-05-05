@@ -18,6 +18,7 @@ namespace KatanaEngine
 {
 	int Game::s_screenWidth = 800;
 	int Game::s_screenHeight = 600;
+	int Game::m_score = 0;
 
 	std::string Game::s_contentDirectory = "..\\Content\\";
 	std::string Game::s_windowTitle = "Game";
@@ -36,6 +37,7 @@ namespace KatanaEngine
 
 		m_pInput = nullptr;
 		m_pFrameCounterFont = nullptr;
+		m_pScoreboardFont = nullptr;
 
 		m_currentTime = al_get_time();
 		m_previousTime = al_get_time();
@@ -238,6 +240,25 @@ namespace KatanaEngine
 		{
 			std::cout << "FPS: " << m_actualFramesPerSec << std::endl;
 		}
+	}
+
+	void Game::DisplayScore()
+	{
+		// String to display scoreboard and the value of the score
+		std::string scoreboard = { "Score  " + std::to_string(m_score) };
+
+		// Draw the scoreboard
+		m_pSpriteBatch->Begin();
+		m_pSpriteBatch->DrawString(m_pScoreboardFont, &scoreboard, Vector2(10, 850), Color::WHITE);
+		m_pSpriteBatch->End();
+	}
+
+	void Game::AddPoints(int pts)
+	{
+		// If the value of the parameter passed is 0, set the score to 0.
+		// Else, add the value of the parameter passed to the score variable.
+		if (pts == 0) m_score = 0;
+		m_score += pts;
 	}
 
 	void Game::SetTargetFramesPerSecond(int const frames)

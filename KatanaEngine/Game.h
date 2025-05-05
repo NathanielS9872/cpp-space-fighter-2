@@ -39,6 +39,9 @@ namespace KatanaEngine
 			@return The width in pixels. */
 		static int GetScreenHeight() { return s_screenHeight; }
 
+		/* Add points when an enemy dies. */
+		static void AddPoints(int pts);
+
 		/** @brief Gets the screen size in pixels.
 			@return A Point representing the width and height of the screen. */
 		static Vector2 GetScreenCenter() { return (Vector2(s_screenWidth / 2, s_screenHeight / 2)); }
@@ -104,11 +107,19 @@ namespace KatanaEngine
 			@param pFont A pointer to the font. */
 		virtual void SetFrameCounterFont(Font *pFont) { m_pFrameCounterFont = pFont; }
 
+		/** @brief Sets the font for the scoreboard.
+			@param pFont A pointer to the font. */
+		virtual void SetScoreboardFont(Font* pFont) { m_pScoreboardFont = pFont; }
+
 		/** @brief Initializes the game's ScreenManager. */
 		virtual void InitializeScreenManager() { m_pScreenManager = new ScreenManager(this); }
 
 		/** @brief Displays the game's current frame rate. */
 		virtual void DisplayFrameRate();
+
+		/** @brief Displays the scoreboard and current game score. */
+		virtual void DisplayScore();
+
 
 		/** @brief Sets the game to display in fullscreen mode. */
 		virtual void SetFullScreen(bool isFullScreen) { m_isFullScreen = isFullScreen; }
@@ -138,6 +149,7 @@ namespace KatanaEngine
 		double m_actualFramesPerSec = 0;
 		double m_currentTime = 0;
 		double m_previousTime = 0;
+		static int m_score;
 		float m_frameCounter = 0;
 
 		GameTime *m_pGameTime = nullptr;
@@ -149,6 +161,7 @@ namespace KatanaEngine
 		ResourceManager *m_pResourceManager = nullptr;
 
 		Font *m_pFrameCounterFont = nullptr;
+		Font *m_pScoreboardFont = nullptr;
 
 		bool IsRunning() const { return m_isRunning; }
 	};

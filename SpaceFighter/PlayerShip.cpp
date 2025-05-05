@@ -1,6 +1,7 @@
 
 #include "PlayerShip.h"
 #include "Level.h"
+#include "Game.h"
 
 void PlayerShip::LoadContent(ResourceManager& resourceManager)
 {
@@ -62,6 +63,12 @@ void PlayerShip::HandleInput(const InputState& input)
 
 		SetDesiredDirection(direction);
 		if (type != TriggerType::None) FireWeapons(type);
+	}
+	else
+	{
+		// If the Player's Ship is inactive, add 0 points.
+		// In the AddPoints method, if the parameter value is 0, it will set the score to 0.
+		Game::AddPoints(0);
 	}
 }
 
