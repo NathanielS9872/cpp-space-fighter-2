@@ -37,7 +37,7 @@ void Level02::LoadContent(ResourceManager& resourceManager)
 		delay += delays[i];
 		position.Set(xPositions[i] * Game::GetScreenWidth(), -pTexture->GetCenter().Y);
 
-		BioEnemyShip* pEnemy = new BioEnemyShip();
+		BioEnemyShip* pEnemy = new BioEnemyShip(i);
 		pEnemy->SetTexture(pTexture);
 		pEnemy->SetCurrentLevel(this);
 		pEnemy->Initialize(position, (float)delay);

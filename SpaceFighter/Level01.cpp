@@ -8,9 +8,8 @@ void Level01::LoadContent(ResourceManager& resourceManager)
 {
 	// Setup enemy ships
 	Texture *pTexture = resourceManager.Load<Texture>("Textures\\BioEnemyShip.png");
-
+	Texture* pTextureBoss = resourceManager.Load<Texture>("Textures\\BioEnemyBoss.png");
 	const int COUNT = 21;
-
 	double xPositions[COUNT] =
 	{
 		0.25, 0.2, 0.3,
@@ -37,8 +36,9 @@ void Level01::LoadContent(ResourceManager& resourceManager)
 		delay += delays[i];
 		position.Set(xPositions[i] * Game::GetScreenWidth(), -pTexture->GetCenter().Y);
 
-		BioEnemyShip *pEnemy = new BioEnemyShip();
+		BioEnemyShip *pEnemy = new BioEnemyShip(i);
 		pEnemy->SetTexture(pTexture);
+		if (pEnemy->IsBoss()) { pEnemy->SetTexture(pTextureBoss); }
 		pEnemy->SetCurrentLevel(this);
 		pEnemy->Initialize(position, (float)delay);
 		AddGameObject(pEnemy);
