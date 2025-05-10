@@ -66,9 +66,9 @@ void PlayerShip::HandleInput(const InputState& input)
 	}
 	else
 	{
-		// If the Player's Ship is inactive, add 0 points.
-		// In the AddPoints method, if the parameter value is 0, it will set the score to 0.
-		Game::AddPoints(0);
+		// If the players ship explodes, deduct 50 points from score
+		// Counteracts getting 100 points for player ship exploding
+		Game::AddPoints(-50);
 	}
 }
 

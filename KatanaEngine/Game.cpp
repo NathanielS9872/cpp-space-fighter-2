@@ -19,6 +19,7 @@ namespace KatanaEngine
 	int Game::s_screenWidth = 800;
 	int Game::s_screenHeight = 600;
 	int Game::m_score = 0;
+	bool Game::m_scoreVisible = false;
 
 	std::string Game::s_contentDirectory = "..\\Content\\";
 	std::string Game::s_windowTitle = "Game";
@@ -249,7 +250,14 @@ namespace KatanaEngine
 
 		// Draw the scoreboard
 		m_pSpriteBatch->Begin();
-		m_pSpriteBatch->DrawString(m_pScoreboardFont, &scoreboard, Vector2(10, 850), Color::WHITE);
+		if (Game::m_scoreVisible)
+		{
+			m_pSpriteBatch->DrawString(m_pScoreboardFont, &scoreboard, Vector2(10, 850), Color::WHITE);
+		}
+		else
+		{
+			m_pSpriteBatch->DrawString(m_pScoreboardFont, &scoreboard, Vector2(10, 850), Color::BLACK);
+		}
 		m_pSpriteBatch->End();
 	}
 
@@ -259,6 +267,18 @@ namespace KatanaEngine
 		// Else, add the value of the parameter passed to the score variable.
 		if (pts == 0) m_score = 0;
 		m_score += pts;
+	}
+
+	void Game::ChangeScoreboardVisibility()
+	{
+		if (m_scoreVisible == true)
+		{
+			m_scoreVisible = false;
+		}
+		else
+		{
+			m_scoreVisible = true;
+		}
 	}
 
 	void Game::SetTargetFramesPerSecond(int const frames)

@@ -42,6 +42,9 @@ namespace KatanaEngine
 		/* Add points when an enemy dies. */
 		static void AddPoints(int pts);
 
+		/* Switch the score visibility. */
+		static void ChangeScoreboardVisibility();
+
 		/** @brief Gets the screen size in pixels.
 			@return A Point representing the width and height of the screen. */
 		static Vector2 GetScreenCenter() { return (Vector2(s_screenWidth / 2, s_screenHeight / 2)); }
@@ -143,6 +146,7 @@ namespace KatanaEngine
 		bool m_isRunning = false;
 		bool m_isFullScreen = false;
 		bool m_requireOpenGL = false;
+		static bool m_scoreVisible;
 
 		double m_targetFramesPerSecond = 0;
 		double m_inverseTargetFrames = 0;
