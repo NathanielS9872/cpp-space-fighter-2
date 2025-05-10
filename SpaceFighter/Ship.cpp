@@ -23,6 +23,8 @@ void Ship::Update(const GameTime& gameTime)
 
 void Ship::Hit(const float damage)
 {
+	Game::AddPoints(50);
+
 	if (m_isInvulnurable) return;
 
 	m_hitPoints -= damage;

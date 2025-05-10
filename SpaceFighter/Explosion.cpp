@@ -25,7 +25,4 @@ void Explosion::Activate(const Vector2 position, const float scale)
 	m_pAnimation->SetLoopCount(0);
 	m_pAnimation->Play();
 	if (m_pSound) m_pSound->Play();
-	// Add 50 points on enemy explosions.
-	// Subject to change pending new enemy types.
-	Game::AddPoints(50);
 }
