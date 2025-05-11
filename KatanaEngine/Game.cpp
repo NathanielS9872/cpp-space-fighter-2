@@ -13,6 +13,7 @@
 */
 
 #include "KatanaEngine.h"
+#include <fstream>
 
 namespace KatanaEngine
 {
@@ -242,21 +243,43 @@ namespace KatanaEngine
 			std::cout << "FPS: " << m_actualFramesPerSec << std::endl;
 		}
 	}
-
+	std::string GetHighScore() {
+		std::string filepath = "C:\\Temp\\SpaceFighterScore.txt";
+		std::ifstream file(filepath);
+		std::string line;
+		std::getline(file, line);
+		file.close();
+		return line;
+	}
+	void WriteScore(int score) {
+		std::string filepath = "C:\\Temp\\SpaceFighterScore.txt";
+		std::ofstream file(filepath);
+		file << std::to_string(score);
+		file.close();
+	}
 	void Game::DisplayScore()
 	{
 		// String to display scoreboard and the value of the score
 		std::string scoreboard = { "Score  " + std::to_string(m_score) };
+		std::string highscore = "High Score " + GetHighScore();
 
 		// Draw the scoreboard
 		m_pSpriteBatch->Begin();
 		if (Game::m_scoreVisible)
 		{
-			m_pSpriteBatch->DrawString(m_pScoreboardFont, &scoreboard, Vector2(10, 850), Color::WHITE);
+			m_pSpriteBatch->DrawString(m_pScoreboardFont, &scoreboard, Vector2(10, 800), Color::WHITE);
+			m_pSpriteBatch->DrawString(m_pScoreboardFont, &highscore, Vector2(10, 850), Color::WHITE);
+			if (GetHighScore() == "") {
+				WriteScore(0);
+			}
+			if (m_score > stoi(GetHighScore())) {
+				WriteScore(m_score);
+			}
 		}
 		else
 		{
-			m_pSpriteBatch->DrawString(m_pScoreboardFont, &scoreboard, Vector2(10, 850), Color::BLACK);
+			m_pSpriteBatch->DrawString(m_pScoreboardFont, &scoreboard, Vector2(10, 800), Color::BLACK);
+			m_pSpriteBatch->DrawString(m_pScoreboardFont, &highscore, Vector2(10, 850), Color::BLACK);
 		}
 		m_pSpriteBatch->End();
 	}

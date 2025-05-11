@@ -24,12 +24,14 @@ BioEnemyShip::BioEnemyShip(int i)
 	if (random == 5 || random == 6) {
 		SetSpeed(200);
 		SetMaxHitPoints(1);
+		SetValue(75);
 		SetCollisionRadius(20);
 		m_enemyType = 'F';
 		m_color = Color::YELLOW;
 	}
 	if (random == 7 || random == 8) {
 		SetSpeed(65);
+		SetValue(75);
 		SetMaxHitPoints(5);
 		SetCollisionRadius(20);
 		m_enemyType = 'T';
@@ -37,6 +39,7 @@ BioEnemyShip::BioEnemyShip(int i)
 	}
 	if (random == 9) {
 		SetSpeed(20);
+		SetValue(150);
 		SetMaxHitPoints(20);
 		SetCollisionRadius(100);
 		m_enemyType = 'B';

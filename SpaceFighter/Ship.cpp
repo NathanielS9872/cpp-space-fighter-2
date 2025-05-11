@@ -23,12 +23,12 @@ void Ship::Update(const GameTime& gameTime)
 
 void Ship::Hit(const float damage)
 {
-	Game::AddPoints(50);
-
 	if (m_isInvulnurable) return;
 
 	m_hitPoints -= damage;
 	if (m_hitPoints > 0) return;
+
+	Game::AddPoints(m_pointValue);
 
 	GameObject::Deactivate();
 	if (this->ToString() != "Player Ship") {

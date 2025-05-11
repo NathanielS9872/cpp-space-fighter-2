@@ -93,7 +93,7 @@ protected:
 	/** @brief Gets the max hit points of the ship.
 		@return Returns the max hit points of the ship. */
 	virtual float GetMaxHitPoints() const { return m_maxHitPoints; }
-
+	virtual void SetValue(int pointValue) { m_pointValue = pointValue; }
 
 private:
 
@@ -101,6 +101,7 @@ private:
 
 	float m_maxHitPoints = 3;
 	float m_hitPoints = m_maxHitPoints;
+	int m_pointValue = 50;
 
 	bool m_isInvulnurable = false;
 
