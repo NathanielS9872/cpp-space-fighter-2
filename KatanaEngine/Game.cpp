@@ -288,6 +288,9 @@ namespace KatanaEngine
 	{
 		// If the value of the parameter passed is 0, set the score to 0.
 		// Else, add the value of the parameter passed to the score variable.
+		if (pts == -50) {
+			WriteScore(m_score - 50);
+		}
 		if (pts == 0) m_score = 0;
 		m_score += pts;
 	}
